@@ -13,25 +13,38 @@ namespace Tank
     {
         public static Object[,] ReadMap(string fileName)
         {
-            System.Xml.Serialization.XmlSerializer reader =
-                new System.Xml.Serialization.XmlSerializer(typeof(Object[,]));
-            System.IO.StreamReader file = new System.IO.StreamReader(
-                Environment.CurrentDirectory + "//" + fileName);
-            Object[,] overview = (Object[,])reader.Deserialize(file);
-            file.Close();
-            return overview;
+            Object[,] map = new Object[13, 13];
+            FileStream fs = new FileStream(fileName, FileMode.Open);
+            BinaryReader br = new BinaryReader(fs);
+
+            for (int i = 0; i < 13; i++)
+            {
+                for (int j = 0; j < 13; j++)
+                {
+                    string type = br.ReadString();
+                    map[j, i] = new Object(type);
+                }
+            }
+
+            br.Close();
+            return map;
         }
 
-        public static void WriteMap(Object[,] overview, string fileName)
+        public static void WriteMap(Object[,] map, string fileName)
         {
-            System.Xml.Serialization.XmlSerializer writer =
-                new System.Xml.Serialization.XmlSerializer(typeof(Object[,]));
+            FileStream fs = new FileStream(fileName, FileMode.Create);
+            BinaryWriter bw = new BinaryWriter(fs);
 
-            var path = Environment.CurrentDirectory + "//" + fileName;
-            System.IO.FileStream file = System.IO.File.Create(path);
-
-            writer.Serialize(file, overview);
-            file.Close();
+            for (int i = 0; i < 13; i++)
+            {
+                for (int j = 0; j < 13; j++)
+                {
+                    string type = map[j, i].Name;
+                    bw.Write(type);
+                    bw.Flush();
+                }
+            }
+            bw.Close();
         }
     }
 }
