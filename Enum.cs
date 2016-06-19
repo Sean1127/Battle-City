@@ -10,5 +10,6 @@ namespace Tank
     {
         public enum Direction { Up, Down, Left, Right, None };
         public enum Color { Yellow, Green, Gray, Red };
+
     }
 }

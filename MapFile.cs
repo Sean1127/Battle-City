@@ -11,21 +11,21 @@ namespace Tank
 {
     public class MapFile
     {
-        public static Object[][] ReadMap(string fileName)
+        public static Object[,] ReadMap(string fileName)
         {
             System.Xml.Serialization.XmlSerializer reader =
-                new System.Xml.Serialization.XmlSerializer(typeof(Object[][]));
+                new System.Xml.Serialization.XmlSerializer(typeof(Object[,]));
             System.IO.StreamReader file = new System.IO.StreamReader(
                 Environment.CurrentDirectory + "//" + fileName);
-            Object[][] overview = (Object[][])reader.Deserialize(file);
+            Object[,] overview = (Object[,])reader.Deserialize(file);
             file.Close();
             return overview;
         }
 
-        public static void WriteMap(Object[][] overview, string fileName)
+        public static void WriteMap(Object[,] overview, string fileName)
         {
             System.Xml.Serialization.XmlSerializer writer =
-                new System.Xml.Serialization.XmlSerializer(typeof(Object[][]));
+                new System.Xml.Serialization.XmlSerializer(typeof(Object[,]));
 
             var path = Environment.CurrentDirectory + "//" + fileName;
             System.IO.FileStream file = System.IO.File.Create(path);
