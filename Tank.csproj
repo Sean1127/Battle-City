@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6613DDD5-1AEE-45AB-8DF3-FF66EDB59E8D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tank</RootNamespace>
+    <AssemblyName>Tank</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bullet.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Enum.cs" />
+    <Compile Include="Form_game_2player.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_game_2player.Designer.cs">
+      <DependentUpon>Form_game_2player.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_menu.Designer.cs">
+      <DependentUpon>Form_menu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_const.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_const.Designer.cs">
+      <DependentUpon>Form_const.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_game.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_game.Designer.cs">
+      <DependentUpon>Form_game.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_stage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_stage.Designer.cs">
+      <DependentUpon>Form_stage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Object.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MapFile.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Tank.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <EmbeddedResource Include="Form_game_2player.resx">
+      <DependentUpon>Form_game_2player.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_menu.resx">
+      <DependentUpon>Form_menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_const.resx">
+      <DependentUpon>Form_const.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_game.resx">
+      <DependentUpon>Form_game.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_stage.resx">
+      <DependentUpon>Form_stage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\water_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\steel_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\brick_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\grass_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\ice_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\brick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\steel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\grass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\water1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\water2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\water3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\ice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\terrain\brick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\terrain\brick_block.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\terrain\grass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\terrain\ice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\terrain\steel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\terrain\steel_block.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\terrain\water1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\terrain\water2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\terrain\water3.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

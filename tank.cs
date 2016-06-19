@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Direction = Tank.Enum.Direction;
 using Color = Tank.Enum.Color;
 
 namespace Tank
 {
     public class Tank : Object
     {
-        private Direction direction;
-        private Color color;
-        private int speed = 2;
-        private ImageList[][][] imageList_tank;
-        private ImageList imageList_explode;
-        private int level;
-        private int ammo;
+        public bool dirUp { get; set; }
+        public bool dirDown { get; set; }
+        public bool dirLeft { get; set; }
+        public bool dirRight { get; set; }
+        public Color color { get; set; }
+        public int speed { get; set; }
+        public ImageList[][][] imageList_tank { get; set; }
+        public ImageList imageList_explode { get; set; }
+        public int level { get; set; }
+        public int ammo { get; set; }
 
-        // 測試用，最後要刪掉
-        private ImageList imageList;
-        private bool animate_type;
-        // 測試
+        public ImageList imageList { get; set; } // 
+        public bool animate_type { get; set; } // 
 
         public Tank(System.Windows.Forms.ImageList imageList/*, ImageList[][][] imageList1, ImageList imageList2*/)
         {
@@ -32,8 +33,9 @@ namespace Tank
              */
             this.imageList = imageList; //
             this.animate_type = false; //
+            this.Size = new Size(32, 32);
             this.SizeMode = PictureBoxSizeMode.AutoSize;
-            this.direction = Direction.None;
+            this.speed = 1;
         }
 
         public void MoveUp()
@@ -77,36 +79,6 @@ namespace Tank
         public void upgrade()
         {
 
-        }
-
-        public Direction Direction
-        {
-            get { return direction; }
-            set { direction = value; }
-        }
-
-        public Color Color
-        {
-            get { return color; }
-            set { color = value; }
-        }
-
-        public int Speed
-        {
-            get { return speed; }
-            set { speed = value; }
-        }
-
-        public int Level
-        {
-            get { return level; }
-            set { level = value; }
-        }
-
-        public int Ammo
-        {
-            get { return ammo; }
-            set { ammo = value; }
         }
     }
 }

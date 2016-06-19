@@ -1,0 +1,13 @@
+D:\Documents\大二下\視窗程設\homework\Tank\bin\Debug\Tank.exe.config
+D:\Documents\大二下\視窗程設\homework\Tank\bin\Debug\Tank.exe
+D:\Documents\大二下\視窗程設\homework\Tank\bin\Debug\Tank.pdb
+D:\Documents\大二下\視窗程設\homework\Tank\obj\Debug\Tank.csprojResolveAssemblyReference.cache
+D:\Documents\大二下\視窗程設\homework\Tank\obj\Debug\Tank.Properties.Resources.resources
+D:\Documents\大二下\視窗程設\homework\Tank\obj\Debug\Tank.csproj.GenerateResource.Cache
+D:\Documents\大二下\視窗程設\homework\Tank\obj\Debug\Tank.exe
+D:\Documents\大二下\視窗程設\homework\Tank\obj\Debug\Tank.pdb
+D:\Documents\大二下\視窗程設\homework\Tank\obj\Debug\Tank.From_menu.resources
+D:\Documents\大二下\視窗程設\homework\Tank\obj\Debug\Tank.Form_construct.resources
+D:\Documents\大二下\視窗程設\homework\Tank\obj\Debug\Tank.Form_game.resources
+D:\Documents\大二下\視窗程設\homework\Tank\obj\Debug\Tank.Form_stage.resources
+D:\Documents\大二下\視窗程設\homework\Tank\obj\Debug\Tank.Form_game_2player.resources
