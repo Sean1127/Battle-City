@@ -1,0 +1,7 @@
+error
+
+1. class to be written and read need to be [Serializable]
+
+2. need to have public parameterless constructor
+
+3. member in class also need to be [Serializable]
