@@ -8,33 +8,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Direction = Tank.Enum.Direction;
 
 namespace Tank
 {
     public partial class Form_game : Form
     {
         private Form_stage form_stage;
-        private Tank[] player;
-        private int number;
+        private Tank player1;
         private KeyEventArgs repeat;
-        private ImageList[][][] imageList;
+        private ImageList[][][] imageList_tank;
 
-        public Form_game(Form_stage form_stage, int number)
+        public Form_game(Form_stage form_stage)
         {
             InitializeComponent();
             this.form_stage = form_stage;
-            this.number = number;
-            player = new Tank[4];
         }
 
         private void Form_game_Load(object sender, EventArgs e)
         {
-            for (int i = 0; i < number; i++)
-            {
-                player[i] = new Tank(imageList1);
-                this.Controls.Add(player[i]);
-            }
-            //this.BackColor = System.Drawing.Color.Black;
+            this.BackColor = System.Drawing.Color.Black;
+            this.player1 = new Tank(imageList1);
+            this.Controls.Add(player1);
         }
 
         private void Form_game_FormClosed(object sender, FormClosedEventArgs e)
@@ -52,28 +47,16 @@ namespace Tank
             switch (e.KeyCode)
             {
                 case Keys.Left:
-                    player[0].SetLeft(true);
+                    player1.Direction = Direction.Left;
                     break;
                 case Keys.Right:
-                    player[0].SetRight(true);
+                    player1.Direction = Direction.Right;
                     break;
                 case Keys.Down:
-                    player[0].SetDown(true);
+                    player1.Direction = Direction.Down;
                     break;
                 case Keys.Up:
-                    player[0].Up = true;
-                    break;
-                case Keys.A:
-                    player[1].SetLeft(true);
-                    break;
-                case Keys.D:
-                    player[1].SetRight(true);
-                    break;
-                case Keys.S:
-                    player[1].SetDown(true);
-                    break;
-                case Keys.W:
-                    player[1].Up = true;
+                    player1.Direction = Direction.Up;
                     break;
             }
             PlayerMove();
@@ -85,33 +68,20 @@ namespace Tank
             switch (e.KeyCode)
             {
                 case Keys.Left:
-                    player[0].SetLeft(false);
+                    player1.Direction = Direction.None;
                     break;
                 case Keys.Right:
-                    player[0].SetRight(false);
+                    player1.Direction = Direction.None;
                     break;
                 case Keys.Down:
-                    player[0].SetDown(false);
+                    player1.Direction = Direction.None;
                     break;
                 case Keys.Up:
-                    player[0].Up = false;
-                    break;
-                case Keys.A:
-                    player[1].SetLeft(false);
-                    break;
-                case Keys.D:
-                    player[1].SetRight(false);
-                    break;
-                case Keys.S:
-                    player[1].SetDown(false);
-                    break;
-                case Keys.W:
-                    player[1].Up = false;
+                    player1.Direction = Direction.None;
                     break;
             }
 
-            if (!(player[0].getDown() || player[0].getLeft() || player[0].getRight() || player[0].Up ||
-                player[1].getDown() || player[1].getRight() || player[1].getLeft() || player[1].Up))
+            if (player1.Direction == Direction.None)
             {
                 timer_move.Stop();
             }
@@ -124,14 +94,10 @@ namespace Tank
 
         private void PlayerMove()
         {
-            if (player[0].getDown()) player[0].MoveDown();
-            if (player[0].getLeft()) player[0].MoveLeft();
-            if (player[0].getRight()) player[0].MoveRight();
-            if (player[0].Up) player[0].MoveUp();
-            if (player[1].getDown()) player[1].MoveDown();
-            if (player[1].getLeft()) player[1].MoveLeft();
-            if (player[1].getRight()) player[1].MoveRight();
-            if (player[1].Up) player[1].MoveUp();
+            if (player1.Direction == Direction.Down) player1.MoveDown();
+            if (player1.Direction == Direction.Left) player1.MoveLeft();
+            if (player1.Direction == Direction.Right) player1.MoveRight();
+            if (player1.Direction == Direction.Up) player1.MoveUp();
         }
     }
 }

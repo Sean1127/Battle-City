@@ -24,14 +24,14 @@ namespace Tank
 
         private void button_singleplayer_Click(object sender, EventArgs e)
         {
-            Form_stage form_stage = new Form_stage(this, 1);
+            Form_stage form_stage = new Form_stage(this, false);
             form_stage.Show();
             this.Hide();
         }
 
         private void button_multiplayer_Click(object sender, EventArgs e)
         {
-            Form_stage form_stage = new Form_stage(this, 2);
+            Form_stage form_stage = new Form_stage(this, true);
             form_stage.Show();
             this.Hide();
         }

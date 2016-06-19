@@ -14,13 +14,13 @@ namespace Tank
     {
         private From_menu from_menu;
 
-        private int number;
+        private bool player2;
 
-        public Form_stage(From_menu from_menu, int number)
+        public Form_stage(From_menu from_menu, bool player2)
         {
             InitializeComponent();
             this.from_menu = from_menu;
-            this.number = number;
+            this.player2 = player2;
         }
 
         private void Form_stage_Load(object sender, EventArgs e)
@@ -35,8 +35,16 @@ namespace Tank
 
         private void button_stage1_Click(object sender, EventArgs e)
         {
-            Form_game form_game = new Form_game(this, number);
-            form_game.Show();
+            if (!player2)
+            {
+                Form_game form_game = new Form_game(this);
+                form_game.Show();
+            }
+            else
+            {
+                Form_game_2player form_game = new Form_game_2player(this);
+                form_game.Show();
+            }
             this.Hide();
         }
     }
