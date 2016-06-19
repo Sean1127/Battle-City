@@ -5,44 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using Type = Tank.Enum.Type;
 
 namespace Tank
 {
-    [Serializable]
     public class Object : PictureBox
     {
         protected bool destructible = false;
         protected bool drivable = false;
         protected bool crossable = false;
-        protected string name;
+        protected Type type;
         private ImageList water;
 
-        public Object() { }
-
-        public Object(string type)
+        public Object(Type type)
         {
-            this.name = type;
+            this.type = type;
             switch(type)
             {
-                case "brick":
+                case Type.Brick:
                     destructible = true;
                     this.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\brick.png");
                     break;
-                case "steel":
+                case Type.Steel:
                     this.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\steel.png");
                     destructible = true;
                     break;
-                case "bush":
+                case Type.Bush:
                     this.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\bush.png");
                     drivable = true;
                     crossable = true;
                     break;
-                case "ice":
+                case Type.Ice:
                     this.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\ice.png");
                     drivable = true;
                     crossable = true;
                     break;
-                case "water":
+                case Type.Water:
                     crossable = true;
                     water = new ImageList();
                     water.ImageSize = new Size(32, 32);
@@ -51,10 +49,12 @@ namespace Tank
                     water.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\water3.png"));
                     this.Image = water.Images[0];
                     break;
-                case "road":
+                case Type.Road:
                     crossable = true;
                     drivable = true;
                     this.Image = null;
+                    break;
+                default:
                     break;
             }
         }
