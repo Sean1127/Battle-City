@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using Map = Tank.MapFile;
 
 namespace Tank
 {
@@ -35,14 +37,15 @@ namespace Tank
 
         private void button_stage1_Click(object sender, EventArgs e)
         {
+            Object[][] map = Map.ReadMap("stage1");
             if (!player2)
             {
-                Form_game form_game = new Form_game(this);
+                Form_game form_game = new Form_game(this, map);
                 form_game.Show();
             }
             else
             {
-                Form_game_2player form_game = new Form_game_2player(this);
+                Form_game_2player form_game = new Form_game_2player(this, map);
                 form_game.Show();
             }
             this.Hide();
