@@ -11,16 +11,26 @@ namespace Tank
 {
     public class Object : PictureBox
     {
-        protected bool destructible = false;
-        protected bool drivable = false;
-        protected bool crossable = false;
-        protected Type type;
-        private ImageList water;
+        public bool destructible { get; set; }
+        public bool drivable { get; set; }
+        public bool crossable { get; set; }
+        public Type type { get; set; }
+        public ImageList water { get; set; }
+
+        public Object() { }
 
         public Object(Type type)
         {
             this.type = type;
-            switch(type)
+            this.destructible = false;
+            this.drivable = false;
+            this.crossable = false;
+            TypeChanged();
+        }
+
+        public void TypeChanged()
+        {
+            switch (type)
             {
                 case Type.Brick:
                     destructible = true;
@@ -57,24 +67,6 @@ namespace Tank
                 default:
                     break;
             }
-        }
-
-        public bool Destructible
-        {
-            get { return destructible; }
-            set { destructible = value; }
-        }
-
-        public bool Drivable
-        {
-            get { return drivable; }
-            set { drivable = value; }
-        }
-
-        public bool Crossable
-        {
-            get { return crossable; }
-            set { crossable = value; }
         }
     }
 }

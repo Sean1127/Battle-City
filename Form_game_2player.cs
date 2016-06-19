@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Direction = Tank.Enum.Direction;
 
 namespace Tank
 {
@@ -32,14 +31,14 @@ namespace Tank
 
         private void PlayerMove()
         {
-            if (player1.Direction == Direction.Down) player1.MoveDown();
-            if (player1.Direction == Direction.Left) player1.MoveLeft();
-            if (player1.Direction == Direction.Right) player1.MoveRight();
-            if (player1.Direction == Direction.Up) player1.MoveUp();
-            if (player2.Direction == Direction.Down) player2.MoveDown();
-            if (player2.Direction == Direction.Left) player2.MoveLeft();
-            if (player2.Direction == Direction.Right) player2.MoveRight();
-            if (player2.Direction == Direction.Up) player2.MoveUp();
+            if (player1.dirDown) player1.MoveDown();
+            if (player1.dirLeft) player1.MoveLeft();
+            if (player1.dirRight) player1.MoveRight();
+            if (player1.dirUp) player1.MoveUp();
+            if (player2.dirDown) player2.MoveDown();
+            if (player2.dirLeft) player2.MoveLeft();
+            if (player2.dirRight) player2.MoveRight();
+            if (player2.dirUp) player2.MoveUp();
         }
 
         private void Form_game_2player_Load(object sender, EventArgs e)
@@ -61,28 +60,28 @@ namespace Tank
             switch (e.KeyCode)
             {
                 case Keys.Left:
-                    player1.Direction = Direction.Left;
+                    player1.dirLeft = true;
                     break;
                 case Keys.Right:
-                    player1.Direction = Direction.Right;
+                    player1.dirRight = true;
                     break;
                 case Keys.Down:
-                    player1.Direction = Direction.Down;
+                    player1.dirDown = true;
                     break;
                 case Keys.Up:
-                    player1.Direction = Direction.Up;
+                    player1.dirUp = true;
                     break;
                 case Keys.W:
-                    player2.Direction = Direction.Up;
+                    player2.dirUp = true;
                     break;
                 case Keys.A:
-                    player2.Direction = Direction.Left;
+                    player2.dirLeft = true;
                     break;
                 case Keys.S:
-                    player2.Direction = Direction.Down;
+                    player2.dirDown = true;
                     break;
                 case Keys.D:
-                    player2.Direction = Direction.Right;
+                    player2.dirRight = true;
                     break;
             }
             PlayerMove();
@@ -94,32 +93,33 @@ namespace Tank
             switch (e.KeyCode)
             {
                 case Keys.Left:
-                    player1.Direction = Direction.None;
+                    player1.dirLeft = false;
                     break;
                 case Keys.Right:
-                    player1.Direction = Direction.None;
+                    player1.dirRight = false;
                     break;
                 case Keys.Down:
-                    player1.Direction = Direction.None;
+                    player1.dirDown = false;
                     break;
                 case Keys.Up:
-                    player1.Direction = Direction.None;
+                    player1.dirUp = false;
                     break;
                 case Keys.W:
-                    player2.Direction = Direction.None;
+                    player2.dirUp = false;
                     break;
                 case Keys.A:
-                    player2.Direction = Direction.None;
+                    player2.dirLeft = false;
                     break;
                 case Keys.S:
-                    player2.Direction = Direction.None;
+                    player2.dirDown = false;
                     break;
                 case Keys.D:
-                    player2.Direction = Direction.None;
+                    player2.dirRight = false;
                     break;
             }
 
-            if (player1.Direction == Direction.None && player2.Direction == Direction.None)
+            if (!(player1.dirDown || player1.dirLeft || player1.dirRight || player1.dirUp ||
+                player2.dirDown || player2.dirLeft || player2.dirRight || player2.dirUp))
             {
                 timer_move.Stop();
             }

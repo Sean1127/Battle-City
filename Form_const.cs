@@ -8,41 +8,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Map = Tank.MapFile;
+using Type = Tank.Enum.Type;
 
 namespace Tank
 {
     public partial class Form_construct : Form
     {
         private From_menu from_menu;
-        private string type;
+        private Type type;
         private Object[,] map;
 
         public Form_construct(From_menu from_menu)
         {
             InitializeComponent();
             this.from_menu = from_menu;
+            this.type = Type.Road;
+            this.map = new Object[13, 13];
         }
 
         private void Form_construct_Load(object sender, EventArgs e)
         {
-            this.type = "road";
-            resetMap();
+            clearMap();
         }
 
-        private void panel_design_MouseClick(object sender, MouseEventArgs e)
+        private void block_MouseClick(object sender, EventArgs e)
         {
-            int x = (int)e.X / 32;
-            int y = (int)e.Y / 32;
-            if (panel_design.Controls.Contains(map[y, x]))
-            {
-                panel_design.Controls.Remove(map[y, x]);
-                map[y, x].Dispose();
-            }
-            map[y, x] = new Object(type);
-            map[y, x].Size = new Size(32, 32);
-            map[y, x].Top = y * 32;
-            map[y, x].Left = x * 32;
-            panel_design.Controls.Add(map[y, x]);
+            ((Object)(sender)).type = this.type;
+            ((Object)(sender)).TypeChanged();
         }
 
         private void Form_construct_FormClosed(object sender, FormClosedEventArgs e)
@@ -50,11 +42,22 @@ namespace Tank
             from_menu.Show();
         }
 
-        private void resetMap()
+        private void clearMap()
         {
-            map = new Object[13,13];
             panel_design.Controls.Clear();
-            /*map[] = phynex*/
+
+            for (int i = 0; i < 13; i++)
+            {
+                for (int j = 0; j < 13; j++)
+                {
+                    map[j, i] = new Object(Type.Road);
+                    map[j, i].Size = new Size(32, 32);
+                    map[j, i].Top = j * 32;
+                    map[j, i].Left = i * 32;
+                    map[j, i].Click += new System.EventHandler(block_MouseClick);
+                    panel_design.Controls.Add(map[j, i]);
+                }
+            }
         }
 
         private void 開啟OToolStripMenuItem_Click(object sender, EventArgs e)
@@ -69,6 +72,14 @@ namespace Tank
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
+                }
+
+                for (int i = 0; i < 13; i++)
+                {
+                    for (int j = 0; j < 13; j++)
+                    {
+                        panel_design.Controls.Add(map[j, i]);
+                    }
                 }
             }
         }
@@ -90,13 +101,13 @@ namespace Tank
             if (result == DialogResult.Yes)
             {
                 儲存SToolStripMenuItem_Click(sender, e);
-                resetMap();
+                clearMap();
             }
             else if (result == DialogResult.No)
             {
-                resetMap();
+                clearMap();
             }
-            else
+            else // Cancle
             {
                 return;
             }
@@ -104,32 +115,32 @@ namespace Tank
 
         private void iceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            type = "ice";
+            type = Type.Ice;
         }
 
         private void eraserToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            type = "road";
+            type = Type.Road;
         }
 
         private void brickToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            type = "brick";
+            type = Type.Brick;
         }
 
         private void steelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            type = "steel";
+            type = Type.Steel;
         }
 
         private void waterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            type = "water";
+            type = Type.Water;
         }
 
         private void bushToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            type = "buch";
+            type = Type.Bush;
         }
 
         private void Form_construct_FormClosing(object sender, FormClosingEventArgs e)
@@ -149,12 +160,12 @@ namespace Tank
                 {
                     Map.WriteMap(map, save.FileName);
                 }
-                else
+                else // Cancle
                 {
                     e.Cancel = true;
                 }
             }
-            else
+            else // Cancel
             {
                 e.Cancel = true;
             }

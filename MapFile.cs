@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
+using Type = Tank.Enum.Type;
+using System.Drawing;
 
 namespace Tank
 {
@@ -21,8 +21,11 @@ namespace Tank
             {
                 for (int j = 0; j < 13; j++)
                 {
-                    string type = br.ReadString();
+                    Type type = (Type)br.ReadInt32();
                     map[j, i] = new Object(type);
+                    map[j, i].Size = new Size(32, 32);
+                    map[j, i].Top = j * 32;
+                    map[j, i].Left = i * 32;
                 }
             }
 
@@ -39,8 +42,8 @@ namespace Tank
             {
                 for (int j = 0; j < 13; j++)
                 {
-                    string type = map[j, i].Name;
-                    bw.Write(type);
+                    Type type = map[j, i].type;
+                    bw.Write(type.ToString());
                     bw.Flush();
                 }
             }
