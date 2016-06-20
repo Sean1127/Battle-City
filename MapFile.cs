@@ -33,6 +33,7 @@ namespace Tank
                     for (int j = 0; j < 13; j++)
                     {
                         Type type = (Type)br.ReadInt32();
+                        map[j, i] = new Object(type);
                         map[j, i].Size = new Size(32, 32);
                         map[j, i].Top = j * 32;
                         map[j, i].Left = i * 32;

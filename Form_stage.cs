@@ -35,9 +35,10 @@ namespace Tank
             from_menu.Show();
         }
 
-        private void button_stage1_Click(object sender, EventArgs e)
+        private void button_stage_Click(object sender, EventArgs e)
         {
-            Object[,] map = Map.ReadMap(Environment.CurrentDirectory + @"\..\..\stage\stage1");
+            Object[,] map = Map.ReadMap(Environment.CurrentDirectory + @"\..\..\stage\stage" +
+                ((Button)(sender)).Text.Substring(((Button)(sender)).Text.Length - 1, 1) + ".map");
             if (!player2)
             {
                 Form_game form_game = new Form_game(this, map);

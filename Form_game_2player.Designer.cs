@@ -33,6 +33,7 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.timer_move = new System.Windows.Forms.Timer(this.components);
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
+            this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // imageList1
@@ -50,7 +51,7 @@
             // 
             // timer_move
             // 
-            this.timer_move.Interval = 4;
+            this.timer_move.Interval = 10;
             this.timer_move.Tick += new System.EventHandler(this.timer_move_Tick);
             // 
             // imageList2
@@ -66,12 +67,21 @@
             this.imageList2.Images.SetKeyName(6, "my1_green_right_1.png");
             this.imageList2.Images.SetKeyName(7, "my1_green_right_2.png");
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Location = new System.Drawing.Point(32, 32);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(416, 416);
+            this.panel1.TabIndex = 0;
+            // 
             // Form_game_2player
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(584, 561);
+            this.BackColor = System.Drawing.Color.LightGray;
+            this.ClientSize = new System.Drawing.Size(560, 480);
+            this.Controls.Add(this.panel1);
             this.Name = "Form_game_2player";
             this.Text = "Battle City 2016";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form_game_2player_FormClosed);
@@ -87,5 +97,6 @@
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Timer timer_move;
         private System.Windows.Forms.ImageList imageList2;
+        private System.Windows.Forms.Panel panel1;
     }
 }

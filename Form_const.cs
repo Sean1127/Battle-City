@@ -188,5 +188,10 @@ namespace Tank
         {
             from_menu.Show();
         }
+
+        private void 結束XToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

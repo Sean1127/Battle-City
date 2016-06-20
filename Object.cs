@@ -15,7 +15,8 @@ namespace Tank
         public bool drivable { get; set; }
         public bool crossable { get; set; }
         public Type type { get; set; }
-        public ImageList water { get; set; }
+        public ImageList animation { get; set; }
+        public Timer timer;
 
         public Object() { }
 
@@ -52,12 +53,12 @@ namespace Tank
                     break;
                 case Type.Water:
                     crossable = true;
-                    water = new ImageList();
-                    water.ImageSize = new Size(32, 32);
-                    water.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\water1.png"));
-                    water.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\water2.png"));
-                    water.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\water3.png"));
-                    this.Image = water.Images[0];
+                    animation = new ImageList();
+                    animation.ImageSize = new Size(32, 32);
+                    animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\water1.png"));
+                    animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\water2.png"));
+                    animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\water3.png"));
+                    this.Image = animation.Images[0];
                     break;
                 case Type.Road:
                     crossable = true;
