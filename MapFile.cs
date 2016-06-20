@@ -14,19 +14,34 @@ namespace Tank
         public static Object[,] ReadMap(string fileName)
         {
             Object[,] map = new Object[13, 13];
-            FileStream fs = new FileStream(fileName, FileMode.Open);
-            BinaryReader br = new BinaryReader(fs);
+            BinaryReader br;
 
-            for (int i = 0; i < 13; i++)
+            try
             {
-                for (int j = 0; j < 13; j++)
+                br = new BinaryReader(new FileStream(fileName, FileMode.Open));
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+
+            try
+            {
+                for (int i = 0; i < 13; i++)
                 {
-                    Type type = (Type)br.ReadInt32();
-                    map[j, i] = new Object(type);
-                    map[j, i].Size = new Size(32, 32);
-                    map[j, i].Top = j * 32;
-                    map[j, i].Left = i * 32;
+                    for (int j = 0; j < 13; j++)
+                    {
+                        Type type = (Type)br.ReadInt32();
+                        map[j, i].Size = new Size(32, 32);
+                        map[j, i].Top = j * 32;
+                        map[j, i].Left = i * 32;
+                    }
                 }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
             }
 
             br.Close();
@@ -35,18 +50,34 @@ namespace Tank
 
         public static void WriteMap(Object[,] map, string fileName)
         {
-            FileStream fs = new FileStream(fileName, FileMode.Create);
-            BinaryWriter bw = new BinaryWriter(fs);
-
-            for (int i = 0; i < 13; i++)
+            BinaryWriter bw;
+            try
             {
-                for (int j = 0; j < 13; j++)
+                bw = new BinaryWriter(new FileStream(fileName, FileMode.Create));
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+                return;
+            }
+
+            try
+            {
+                for (int i = 0; i < 13; i++)
                 {
-                    Type type = map[j, i].type;
-                    bw.Write(type.ToString());
-                    bw.Flush();
+                    for (int j = 0; j < 13; j++)
+                    {
+                        Type type = map[j, i].type;
+                        bw.Write((int)type);
+                        bw.Flush();
+                    }
                 }
             }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
             bw.Close();
         }
     }

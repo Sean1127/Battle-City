@@ -18,7 +18,7 @@ namespace Tank
         private KeyEventArgs repeat;
         private ImageList[][][] imageList_tank;
 
-        public Form_game(Form_stage form_stage/*, Object[,] map*/)
+        public Form_game(Form_stage form_stage, Object[,] map)
         {
             InitializeComponent();
             this.form_stage = form_stage;

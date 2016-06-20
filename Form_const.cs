@@ -15,34 +15,20 @@ namespace Tank
     public partial class Form_construct : Form
     {
         private From_menu from_menu;
-        private Type type;
+        private Type pen;
         private Object[,] map;
+        private bool penDown;
 
         public Form_construct(From_menu from_menu)
         {
             InitializeComponent();
             this.from_menu = from_menu;
-            this.type = Type.Road;
+            this.pen = Type.Road;
             this.map = new Object[13, 13];
+            this.penDown = false;
         }
 
-        private void Form_construct_Load(object sender, EventArgs e)
-        {
-            clearMap();
-        }
-
-        private void block_MouseClick(object sender, EventArgs e)
-        {
-            ((Object)(sender)).type = this.type;
-            ((Object)(sender)).TypeChanged();
-        }
-
-        private void Form_construct_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            from_menu.Show();
-        }
-
-        private void clearMap()
+        private void setMap(bool reset = false)
         {
             panel_design.Controls.Clear();
 
@@ -50,12 +36,49 @@ namespace Tank
             {
                 for (int j = 0; j < 13; j++)
                 {
-                    map[j, i] = new Object(Type.Road);
+                    if (reset) map[j, i] = new Object(Type.Road);
                     map[j, i].Size = new Size(32, 32);
                     map[j, i].Top = j * 32;
                     map[j, i].Left = i * 32;
-                    map[j, i].Click += new System.EventHandler(block_MouseClick);
+                    map[j, i].MouseDown += new System.Windows.Forms.MouseEventHandler(block_MouseDown);
+                    map[j, i].MouseUp += new System.Windows.Forms.MouseEventHandler(block_MouseUp);
+                    map[j, i].MouseMove += new System.Windows.Forms.MouseEventHandler(block_MouseMove);
                     panel_design.Controls.Add(map[j, i]);
+                }
+            }
+        }
+
+        private void Form_construct_Load(object sender, EventArgs e)
+        {
+            setMap(true);
+        }
+
+        private void block_MouseUp(object sender, MouseEventArgs e)
+        {
+            penDown = false;
+        }
+
+        private void block_MouseDown(object sender, MouseEventArgs e)
+        {
+            ((Object)(sender)).type = this.pen; // get the sener object
+            ((Object)(sender)).TypeChanged();
+            penDown = true;
+        }
+
+        private void block_MouseMove(object sender, MouseEventArgs e)
+        {
+            int x = (e.X + ((Object)(sender)).Left)/32;
+            int y = (e.Y + ((Object)(sender)).Top)/32;
+            if (penDown)
+            {
+                try
+                {
+                    map[y, x].type = this.pen;
+                    map[y, x].TypeChanged();
+                }
+                catch 
+                {
+                    return;
                 }
             }
         }
@@ -73,14 +96,7 @@ namespace Tank
                 {
                     MessageBox.Show(ex.Message);
                 }
-
-                for (int i = 0; i < 13; i++)
-                {
-                    for (int j = 0; j < 13; j++)
-                    {
-                        panel_design.Controls.Add(map[j, i]);
-                    }
-                }
+                setMap();
             }
         }
 
@@ -101,46 +117,43 @@ namespace Tank
             if (result == DialogResult.Yes)
             {
                 儲存SToolStripMenuItem_Click(sender, e);
-                clearMap();
+                setMap(true);
             }
             else if (result == DialogResult.No)
             {
-                clearMap();
+                setMap(true);
             }
-            else // Cancle
-            {
-                return;
-            }
+            // else Cancle -> return
         }
 
         private void iceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            type = Type.Ice;
+            pen = Type.Ice;
         }
 
         private void eraserToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            type = Type.Road;
+            pen = Type.Road;
         }
 
         private void brickToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            type = Type.Brick;
+            pen = Type.Brick;
         }
 
         private void steelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            type = Type.Steel;
+            pen = Type.Steel;
         }
 
         private void waterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            type = Type.Water;
+            pen = Type.Water;
         }
 
         private void bushToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            type = Type.Bush;
+            pen = Type.Bush;
         }
 
         private void Form_construct_FormClosing(object sender, FormClosingEventArgs e)
@@ -169,6 +182,11 @@ namespace Tank
             {
                 e.Cancel = true;
             }
+        }
+
+        private void Form_construct_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            from_menu.Show();
         }
     }
 }
