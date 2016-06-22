@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Type = Tank.Enum.Type;
+using Dir = Tank.Enum.Dir;
 
 namespace Tank
 {
@@ -69,15 +70,19 @@ namespace Tank
             {
                 case Keys.Left:
                     player1.dirLeft = (player1.spawning) ? false : true;
+                    player1.direction = Dir.Left;
                     break;
                 case Keys.Right:
                     player1.dirRight = (player1.spawning) ? false : true;
+                    player1.direction = Dir.Right;
                     break;
                 case Keys.Down:
                     player1.dirDown = (player1.spawning) ? false : true;
+                    player1.direction = Dir.Down;
                     break;
                 case Keys.Up:
                     player1.dirUp = (player1.spawning) ? false : true;
+                    player1.direction = Dir.Up;
                     break;
             }
             timer_move.Start();
@@ -89,15 +94,19 @@ namespace Tank
             {
                 case Keys.Left:
                     player1.dirLeft = false;
+                    player1.direction = Dir.Left;
                     break;
                 case Keys.Right:
                     player1.dirRight = false;
+                    player1.direction = Dir.Right;
                     break;
                 case Keys.Down:
                     player1.dirDown = false;
+                    player1.direction = Dir.Down;
                     break;
                 case Keys.Up:
                     player1.dirUp = false;
+                    player1.direction = Dir.Up;
                     break;
             }
 
