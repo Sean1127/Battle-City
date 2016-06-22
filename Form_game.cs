@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Type = Tank.Enum.Type;
 
 namespace Tank
 {
@@ -30,6 +31,11 @@ namespace Tank
         private void Form_game_Load(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
+
+            this.player1 = new Tank(imageList1, Const.spawnLocation1X, Const.spawnLocation1Y);
+            panel1.Controls.Add(player1);
+            player1.BringToFront();
+            player1.Spawn();
             for (int i = 0; i < 13; i++)
             {
                 for (int j = 0; j < 13; j++)
@@ -38,13 +44,9 @@ namespace Tank
                     map[j, i].Top = j * 32;
                     map[j, i].Left = i * 32;
                     panel1.Controls.Add(map[j, i]);
+                    if (map[j, i].type == Type.Bush) map[j, i].BringToFront();
                 }
             }
-
-            this.player1 = new Tank(imageList1, Const.spawnLocation1X, Const.spawnLocation1Y);
-            panel1.Controls.Add(player1);
-            player1.BringToFront();
-            player1.Spawn();
         }
 
         private void Form_game_FormClosed(object sender, FormClosedEventArgs e)
@@ -108,10 +110,83 @@ namespace Tank
 
         private void PlayerMove()
         {
-            if (player1.dirDown) player1.MoveDown();
-            if (player1.dirLeft) player1.MoveLeft();
-            if (player1.dirRight) player1.MoveRight();
-            if (player1.dirUp) player1.MoveUp();
+            if (player1.dirDown && !Collision_Down(player1)) player1.MoveDown();
+            if (player1.dirLeft && !Collision_Left(player1)) player1.MoveLeft();
+            if (player1.dirRight && !Collision_Right(player1)) player1.MoveRight();
+            if (player1.dirUp && !Collision_Up(player1)) player1.MoveUp();
+        }
+
+        public bool Collision_Left(PictureBox tar)
+        {
+            foreach (Object ob in map)
+            {
+                if (ob != null)
+                {
+                    if (!ob.drivable)
+                    {
+                        PictureBox temp = new PictureBox();
+                        temp.Bounds = ob.Bounds;
+                        temp.SetBounds(temp.Location.X + temp.Width, temp.Location.Y, 1, temp.Height);
+                        if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool Collision_Down(PictureBox tar)
+        {
+            foreach (Object ob in map)
+            {
+                if (ob != null)
+                {
+
+                    if (!ob.drivable)
+                    {
+                        PictureBox temp = new PictureBox();
+                        temp.Bounds = ob.Bounds;
+                        temp.SetBounds(temp.Location.X, temp.Location.Y - 1, temp.Width, 1);
+                        if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool Collision_Right(PictureBox tar)
+        {
+            foreach (Object ob in map)
+            {
+                if (ob != null)
+                {
+                    if (!ob.drivable)
+                    {
+                        PictureBox temp = new PictureBox();
+                        temp.Bounds = ob.Bounds;
+                        temp.SetBounds(temp.Location.X - 1, temp.Location.Y, 1, temp.Height);
+                        if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool Collision_Up(PictureBox tar)
+        {
+            foreach (Object ob in map)
+            {
+                if (ob != null)
+                {
+                    if (!ob.drivable)
+                    {
+                        PictureBox temp = new PictureBox();
+                        temp.Bounds = ob.Bounds;
+                        temp.SetBounds(temp.Location.X, temp.Location.Y + temp.Height, temp.Width, 1);
+                        if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

@@ -33,11 +33,13 @@
             this.timer_move = new System.Windows.Forms.Timer(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // timer_move
             // 
-            this.timer_move.Interval = 200;
+            this.timer_move.Interval = 5;
             this.timer_move.Tick += new System.EventHandler(this.timer_move_Tick);
             // 
             // imageList1
@@ -61,6 +63,21 @@
             this.panel1.Size = new System.Drawing.Size(416, 416);
             this.panel1.TabIndex = 0;
             // 
+            // imageList2
+            // 
+            this.imageList2.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList2.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(30, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(33, 12);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "label1";
+            // 
             // Form_game
             // 
             this.AllowDrop = true;
@@ -68,6 +85,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(560, 480);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Name = "Form_game";
             this.Text = "Battle City 2016";
@@ -76,6 +94,7 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form_game_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form_game_KeyUp);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -84,5 +103,7 @@
         private System.Windows.Forms.Timer timer_move;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ImageList imageList2;
+        private System.Windows.Forms.Label label1;
     }
 }

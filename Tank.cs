@@ -56,7 +56,7 @@ namespace Tank
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\big_pop1.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\big_pop2.png"));
             this.timer = new Timer();
-            this.timer.Interval = 200;
+            this.timer.Interval = 50;
             this.timer.Tick += new System.EventHandler(this.timer_tick);
             this.tick = 0;
         }
