@@ -104,6 +104,7 @@
             this.Controls.Add(this.label_title1);
             this.Controls.Add(this.button_multiplayer);
             this.Controls.Add(this.button_singleplayer);
+            this.KeyPreview = true;
             this.Name = "From_menu";
             this.Text = "Battle City 2016";
             this.Load += new System.EventHandler(this.MenuFrom_Load);

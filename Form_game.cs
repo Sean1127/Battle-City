@@ -21,6 +21,7 @@ namespace Tank
         private KeyEventArgs repeat;
         private ImageList[][][] imageList_tank;
         private Object[,] map;
+        private Bullet[] bullet;
 
         public Form_game(Form_stage form_stage, Object[,] map)
         {
@@ -32,11 +33,11 @@ namespace Tank
         private void Form_game_Load(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
-
             this.player1 = new Tank(imageList1, Const.spawnLocation1X, Const.spawnLocation1Y);
             panel1.Controls.Add(player1);
             player1.BringToFront();
             player1.Spawn();
+
             for (int i = 0; i < 13; i++)
             {
                 for (int j = 0; j < 13; j++)
@@ -52,6 +53,8 @@ namespace Tank
                     }
                 }
             }
+            bullet = new Bullet[6];
+            timer_bullet.Start();
         }
 
         private void Form_game_FormClosed(object sender, FormClosedEventArgs e)
@@ -83,6 +86,15 @@ namespace Tank
                 case Keys.Up:
                     player1.dirUp = (player1.spawning) ? false : true;
                     player1.direction = Dir.Up;
+                    break;
+                case Keys.Space:
+                    bullet[0] = player1.Fire();
+                    if (bullet[0] != null)
+                    {
+                        panel1.Controls.Add(bullet[0]);
+                        bullet[0].BringToFront();
+                        player1.BringToFront();
+                    }
                     break;
             }
             timer_move.Start();
@@ -131,6 +143,7 @@ namespace Tank
 
         public bool Collision_Left(PictureBox tar)
         {
+            if (tar.Left == 0) return true;
             foreach (Object ob in map)
             {
                 if (ob != null)
@@ -149,6 +162,7 @@ namespace Tank
 
         public bool Collision_Down(PictureBox tar)
         {
+            if (tar.Top == 384) return true;
             foreach (Object ob in map)
             {
                 if (ob != null)
@@ -167,6 +181,7 @@ namespace Tank
 
         public bool Collision_Right(PictureBox tar)
         {
+            if (tar.Left == 384) return true;
             foreach (Object ob in map)
             {
                 if (ob != null)
@@ -185,6 +200,7 @@ namespace Tank
 
         public bool Collision_Up(PictureBox tar)
         {
+            if (tar.Top == 0) return true;
             foreach (Object ob in map)
             {
                 if (ob != null)
@@ -201,9 +217,98 @@ namespace Tank
             return false;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void timer_bullet_Tick(object sender, EventArgs e)
         {
-            player1.Explode();
+            count++;
+            for (int i = 0; i < 6; i++)
+            {
+                if (bullet[i] == null) return;
+                switch (bullet[i].direction)
+                {
+                    case Dir.Up:
+                        if (!HitUp(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                            bullet[i] = null;
+                        }
+                        break;
+                    case Dir.Down:
+                        if (!HitDown(bullet[i])) bullet[i].Fly();
+                        break;
+                    case Dir.Right:
+                        if (!HitRight(bullet[i])) bullet[i].Fly();
+                        break;
+                    case Dir.Left:
+                        if (!HitLeft(bullet[i])) bullet[i].Fly();
+                        break;
+                }
+            }
+        }
+        private int count = 0;
+
+        private bool HitUp(Bullet b)
+        {
+            if (b.Top == 0) return true;
+            foreach (Object ob in map)
+            {
+                if (ob != null)
+                {
+                    if (!ob.crossable)
+                    {
+                        if (b.Bounds.IntersectsWith(ob.Bounds)) return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool HitDown(Bullet b)
+        {
+            if (b.Top == 384) return true;
+            foreach (Object ob in map)
+            {
+                if (ob != null)
+                {
+                    if (!ob.crossable)
+                    {
+                        if (b.Bounds.IntersectsWith(ob.Bounds)) return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool HitRight(Bullet b)
+        {
+            if (b.Top == 384) return true;
+            foreach (Object ob in map)
+            {
+                if (ob != null)
+                {
+                    if (!ob.crossable)
+                    {
+                        if (b.Bounds.IntersectsWith(ob.Bounds)) return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool HitLeft(Bullet b)
+        {
+            if (b.Left == 0) return true;
+            foreach (Object ob in map)
+            {
+                if (ob != null)
+                {
+                    if (!ob.crossable)
+                    {
+                        if (b.Bounds.IntersectsWith(ob.Bounds)) return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

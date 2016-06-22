@@ -68,7 +68,7 @@ namespace Tank
                 {
                     for (int j = 0; j < 13; j++)
                     {
-                        if (i != 6 && j != 12)
+                        if (i != 6 || j != 12)
                         {
                             Type type = map[j, i].type;
                             bw.Write((int)type);

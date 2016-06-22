@@ -44,11 +44,13 @@ namespace Tank
             this.Top = y;
             this.Left = x;
             // inner data set
+            this.drivable = false;
+            this.ammo = 1;
             this.animation = new ImageList();
             this.animation.ImageSize = new Size(32, 32);
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\shield1.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\shield2.png"));
-            this.animation.Images.Add(new Bitmap(Environment.CurrentDirectory + @"\..\..\image\spawn1.png"));
+            this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\spawn1.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\spawn2.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\spawn3.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\spawn4.png"));
@@ -198,9 +200,17 @@ namespace Tank
             return true;
         }
 
-        public void fire()
+        public Bullet Fire()
         {
-
+            if (ammo > 0)
+            {
+                ammo--;
+                return new Bullet(direction, 2, Left, Top, this);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void upgrade()

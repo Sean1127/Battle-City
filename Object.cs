@@ -71,6 +71,7 @@ namespace Tank
                     animation.ImageSize = new Size(32, 32);
                     animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix.png"));
                     animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix_dead.png"));
+                    this.Image = animation.Images[0];
                     break;
                 default:
                     break;
