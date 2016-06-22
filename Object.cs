@@ -65,6 +65,13 @@ namespace Tank
                     drivable = true;
                     this.Image = null;
                     break;
+                case Type.Phenix:
+                    destructible = true;
+                    animation = new ImageList();
+                    animation.ImageSize = new Size(32, 32);
+                    animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix.png"));
+                    animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix_dead.png"));
+                    break;
                 default:
                     break;
             }

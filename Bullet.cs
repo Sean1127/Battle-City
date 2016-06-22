@@ -9,18 +9,16 @@ namespace Tank
 {
     class Bullet : Object
     {
-        public bool dirUp { get; set; }
-        public bool dirDown { get; set; }
-        public bool dirLeft { get; set; }
-        public bool dirRight { get; set; }
+        public int direction { get; set; }
         public int tick { get; set; }
         public int speed { get; set; }
-        private ImageList imageList;
 
-        public Bullet(ImageList imageList, int direction, int speed)
+        public Bullet(int direction, int speed, int x, int y)
         {
-            this.imageList = imageList;
             this.speed = speed;
+            this.Top = y;
+            this.Left = x;
+            this.direction = direction;
         }
     }
 }

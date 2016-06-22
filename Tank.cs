@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Color = Tank.Enum.Color;
+using Dir = Tank.Enum.Dir;
 
 namespace Tank
 {
@@ -16,6 +17,7 @@ namespace Tank
         public bool dirDown { get; set; }
         public bool dirLeft { get; set; }
         public bool dirRight { get; set; }
+        public Dir direction { get; set; }
         public Color color { get; set; }
         public int speed { get; set; }
         public int level { get; set; }
@@ -53,8 +55,6 @@ namespace Tank
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\pop1.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\pop2.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\pop3.png"));
-            this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\big_pop1.png"));
-            this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\big_pop2.png"));
             this.timer = new Timer();
             this.timer.Interval = 50;
             this.timer.Tick += new System.EventHandler(this.timer_tick);
@@ -152,10 +152,10 @@ namespace Tank
                         this.Size = new Size(64, 64);
                         this.Top = this.Top - 16;
                         this.Left = this.Left - 16;
-                        this.Image = animation.Images[9];
+                        this.Image = Image.FromFile((Environment.CurrentDirectory + @"\..\..\image\big_pop1.png"));
                         break;
                     default:
-                        this.Image = animation.Images[10];
+                        this.Image = Image.FromFile((Environment.CurrentDirectory + @"\..\..\image\big_pop2.png"));;
                         timer.Stop();
                         exploding = false;
                         tick = 0;

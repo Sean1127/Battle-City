@@ -8,8 +8,9 @@ namespace Tank
 {
     public class Enum
     {
-        public enum Type : int { Road, Brick, Steel, Bush, Ice, Water };
+        public enum Type : int { Road, Brick, Steel, Bush, Ice, Water, Phenix };
         public enum Color : int { Yellow, Green, Gray, Red };
+        public enum Dir : int { Up, Down, Left, Right };
     }
 
     static class Const

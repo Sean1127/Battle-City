@@ -68,9 +68,18 @@ namespace Tank
                 {
                     for (int j = 0; j < 13; j++)
                     {
-                        Type type = map[j, i].type;
-                        bw.Write((int)type);
-                        bw.Flush();
+                        if (i != 6 && j != 12)
+                        {
+                            Type type = map[j, i].type;
+                            bw.Write((int)type);
+                            bw.Flush();
+                        }
+                        else
+                        {
+                            Type type = Type.Phenix;
+                            bw.Write((int)type);
+                            bw.Flush();
+                        }
                     }
                 }
             }

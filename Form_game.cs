@@ -44,7 +44,11 @@ namespace Tank
                     map[j, i].Top = j * 32;
                     map[j, i].Left = i * 32;
                     panel1.Controls.Add(map[j, i]);
-                    if (map[j, i].type == Type.Bush) map[j, i].BringToFront();
+                    if (map[j, i].type == Type.Bush)
+                    {
+                        map[j, i].BackColor = Color.Transparent;
+                        map[j, i].BringToFront();
+                    }
                 }
             }
         }
@@ -140,7 +144,6 @@ namespace Tank
             {
                 if (ob != null)
                 {
-
                     if (!ob.drivable)
                     {
                         PictureBox temp = new PictureBox();
@@ -187,6 +190,11 @@ namespace Tank
                 }
             }
             return false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            player1.Explode();
         }
     }
 }
