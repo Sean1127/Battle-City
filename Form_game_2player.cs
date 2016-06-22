@@ -181,5 +181,10 @@ namespace Tank
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            player1.Explode();
+        }
     }
 }

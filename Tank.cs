@@ -20,8 +20,9 @@ namespace Tank
         public int speed { get; set; }
         public int level { get; set; }
         public int ammo { get; set; }
+        public bool shieldOn { get; set; }
         // animation attributes
-        public ImageList[][][] imageList_tank { get; set; }
+        public ImageList[][][] movement { get; set; }
         public bool spawning { get; set; }
         public bool exploding { get; set; }
         public int tick { get; set; }
@@ -31,20 +32,21 @@ namespace Tank
 
         public Tank(ImageList imageList1, int x, int y/*, ImageList[][][] imageList_tank*/)
         {
-            this.temp = imageList1; //
-            this.temp2 = false; //
-
+            // temp set
+            this.temp = imageList1;
+            this.temp2 = false;
+            // pictureBox set
             this.Size = new Size(32, 32);
             this.SizeMode = PictureBoxSizeMode.AutoSize;
             this.speed = 1;
             this.Top = y;
             this.Left = x;
-
+            // inner data set
             this.animation = new ImageList();
             this.animation.ImageSize = new Size(32, 32);
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\shield1.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\shield2.png"));
-            this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\spawn1.png"));
+            this.animation.Images.Add(new Bitmap(Environment.CurrentDirectory + @"\..\..\image\spawn1.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\spawn2.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\spawn3.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\spawn4.png"));
@@ -73,7 +75,7 @@ namespace Tank
 
         private void timer_tick(object sender, EventArgs e)
         {
-            if(spawning==true)
+            if(spawning)
             {
                 switch (tick)
                 {
@@ -137,8 +139,23 @@ namespace Tank
             {
                 switch (tick)
                 {
+                    case 0:
+                        this.Image = animation.Images[6];
+                        break;
+                    case 1:
+                        this.Image = animation.Images[7];
+                        break;
+                    case 2:
+                        this.Image = animation.Images[8];
+                        break;
+                    case 3:
+                        this.Size = new Size(64, 64);
+                        this.Top = this.Top - 16;
+                        this.Left = this.Left - 16;
+                        this.Image = animation.Images[9];
+                        break;
                     default:
-                        this.Image = animation.Images[0];
+                        this.Image = animation.Images[10];
                         timer.Stop();
                         exploding = false;
                         tick = 0;

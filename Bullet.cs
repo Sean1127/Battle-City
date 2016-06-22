@@ -9,7 +9,11 @@ namespace Tank
 {
     class Bullet : Object
     {
-        public int direction { get; set; }
+        public bool dirUp { get; set; }
+        public bool dirDown { get; set; }
+        public bool dirLeft { get; set; }
+        public bool dirRight { get; set; }
+        public int tick { get; set; }
         public int speed { get; set; }
         private ImageList imageList;
 
