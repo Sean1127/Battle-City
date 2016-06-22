@@ -21,7 +21,10 @@ namespace Tank
         private KeyEventArgs repeat;
         private ImageList[][][] imageList_tank;
         private Object[,] map;
-        private Bullet boom;
+        private Bullet[] bullet;
+        private Tank player2;
+       // private Tank player3;
+       // private Tank player4;
 
         public Form_game(Form_stage form_stage, Object[,] map)
         {
@@ -32,12 +35,8 @@ namespace Tank
 
         private void Form_game_Load(object sender, EventArgs e)
         {
+            
             panel1.Controls.Clear();
-
-            this.player1 = new Tank(imageList1, Const.spawnLocation1X, Const.spawnLocation1Y);
-            panel1.Controls.Add(player1);
-            player1.BringToFront();
-            player1.Spawn();
             for (int i = 0; i < 13; i++)
             {
                 for (int j = 0; j < 13; j++)
@@ -46,9 +45,23 @@ namespace Tank
                     map[j, i].Top = j * 32;
                     map[j, i].Left = i * 32;
                     panel1.Controls.Add(map[j, i]);
-                    if (map[j, i].type == Type.Bush) map[j, i].BringToFront();
                 }
             }
+
+            this.player1 = new Tank(imageList1, Const.spawnLocation1X, Const.spawnLocation1Y);
+            this.player2 = new Tank(imageList2, 32, 0);
+
+            panel1.Controls.Add(player1);
+            panel1.Controls.Add(player2);
+
+            player1.BringToFront();
+            player2.BringToFront();
+
+            player1.Spawn();
+            player2.Spawn();
+
+            bullet = new Bullet[6];
+            timer_bullet.Start();
         }
 
         private void Form_game_FormClosed(object sender, FormClosedEventArgs e)
@@ -82,8 +95,15 @@ namespace Tank
                     player1.direction = Dir.Up;
                     break;
                 case Keys.Space:
+                    Bullet temp = player1.Fire();
+                    if (temp != null)
+                    {
+                        bullet[0] = temp;
+                        panel1.Controls.Add(bullet[0]);
+                        bullet[0].BringToFront();
+                        player1.BringToFront();
+                    }
                     break;
-                    
             }
             timer_move.Start();
         }
@@ -131,6 +151,7 @@ namespace Tank
 
         public bool Collision_Left(PictureBox tar)
         {
+            if (tar.Left == 0) return true;
             foreach (Object ob in map)
             {
                 if (ob != null)
@@ -149,11 +170,11 @@ namespace Tank
 
         public bool Collision_Down(PictureBox tar)
         {
+            if (tar.Top == 384) return true;
             foreach (Object ob in map)
             {
                 if (ob != null)
                 {
-
                     if (!ob.drivable)
                     {
                         PictureBox temp = new PictureBox();
@@ -168,6 +189,7 @@ namespace Tank
 
         public bool Collision_Right(PictureBox tar)
         {
+            if (tar.Left == 384) return true;
             foreach (Object ob in map)
             {
                 if (ob != null)
@@ -186,6 +208,7 @@ namespace Tank
 
         public bool Collision_Up(PictureBox tar)
         {
+            if (tar.Top == 0) return true;
             foreach (Object ob in map)
             {
                 if (ob != null)
@@ -200,6 +223,239 @@ namespace Tank
                 }
             }
             return false;
+        }
+
+        private void timer_bullet_Tick(object sender, EventArgs e)
+        {
+            //label1.Text = "yes";
+            for (int i = 0; i < 6; i++)
+            {
+                if (bullet[i] == null) return;
+                if (bullet[i].tick == 3) panel1.Controls.Remove(bullet[i]);
+                switch (bullet[i].direction)
+                {
+                    case Dir.Up:
+                        if (!Collision_Top(bullet[i], player2)) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                            panel1.Controls.Remove(player2);
+                        }
+                        if (!HitUp(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
+                        break;
+                    case Dir.Down:
+                        if (!Collision_Top(bullet[i], player2)) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                            panel1.Controls.Remove(player2);
+                        }
+                        if (!HitDown(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                            
+                        }
+                        break;
+                    case Dir.Right:
+                        if (!Collision_Top(bullet[i], player2)) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                            panel1.Controls.Remove(player2);
+                        }
+                        if (!HitRight(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
+                        break;
+                    case Dir.Left:
+                        if (!Collision_Left(bullet[i], player2)) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                            panel1.Controls.Remove(player2);
+                        }
+                        if (!HitLeft(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
+                        break;
+                }
+            }
+        }
+
+        private bool HitUp(Bullet b)
+        {
+            if (b.Top == 0) return true;
+            foreach (Object ob in map)
+            {
+                if (ob != null)
+                {
+                    if (!ob.crossable)
+                    {
+                        if (b.Bounds.IntersectsWith(ob.Bounds))
+                        {
+                            if (ob.destructible)
+                            {
+                                if (ob.type == Type.Phenix)
+                                {                                  
+                                    GameOver(ob, b);
+                                }
+                                else
+                                {
+                                    ob.type = Type.Road;
+                                }
+                            }
+                            ob.TypeChanged();
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        private void GameOver(Object ob, Bullet b)
+        {
+            b.Explode();
+            ob.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix_dead.png");
+            timer_bullet.Stop();
+            MessageBox.Show("Game Over", "You're base has been destroyed", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            form_stage.Close();
+            this.Close();
+
+        }
+
+        private bool HitDown(Bullet b)
+        {
+            if (b.Top == 384) return true;
+            foreach (Object ob in map)
+            {
+                if (ob != null)
+                {
+                    if (!ob.crossable)
+                    {
+                        if (b.Bounds.IntersectsWith(ob.Bounds))
+                        {
+                            if (ob.destructible)
+                            {
+                                if (ob.type == Type.Phenix)
+                                {
+                                    GameOver(ob, b);
+                                }
+                                else
+                                {
+                                    ob.type = Type.Road;
+                                }
+                            }
+                            ob.TypeChanged();
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool HitRight(Bullet b)
+        {
+            if (b.Left == 384) return true;
+            foreach (Object ob in map)
+            {
+                if (ob != null)
+                {
+                    if (!ob.crossable)
+                    {
+                        if (b.Bounds.IntersectsWith(ob.Bounds))
+                        {
+                            if (ob.destructible)
+                            {
+                                if (ob.type == Type.Phenix)
+                                {
+                                    GameOver(ob, b);
+                                }
+                                else
+                                {
+                                    ob.type = Type.Road;
+                                }
+                            }
+                            ob.TypeChanged();
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool HitLeft(Bullet b)
+        {
+            if (b.Left < 0) return true;
+            foreach (Object ob in map)
+            {
+                if (ob != null)
+                {
+                    if (!ob.crossable)
+                    {
+                        if (b.Bounds.IntersectsWith(ob.Bounds))
+                        {
+                            if (ob.destructible)
+                            {
+                                if (ob.type == Type.Phenix)
+                                {
+                                    GameOver(ob,b);
+                                }
+                                else
+                                {
+                                    ob.type = Type.Road;
+                                }
+                            }
+                            ob.TypeChanged();
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        public bool Collision_Top(PictureBox tar, PictureBox block)
+        {
+            PictureBox temp = new PictureBox();
+            temp.Bounds = block.Bounds;
+            temp.SetBounds(temp.Location.X, temp.Location.Y + temp.Height, temp.Width, 1);
+            if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
+            else return false;
+        }
+        public bool Collision_Left(PictureBox tar, PictureBox block)
+        {
+            PictureBox temp = new PictureBox();
+            temp.Bounds = block.Bounds;
+            temp.SetBounds(temp.Location.X + temp.Width, temp.Location.Y, 1, temp.Height);
+            if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
+            else return false;
+        }
+        public bool Collision_Right(PictureBox tar, PictureBox block)
+        {
+            PictureBox temp = new PictureBox();
+            temp.Bounds = block.Bounds;
+            temp.SetBounds(temp.Location.X - 1, temp.Location.Y, 1, temp.Height);
+            if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
+            else return false;
+        }
+        public bool Collision_Down(PictureBox tar, PictureBox block)
+        {
+            PictureBox temp = new PictureBox();
+            temp.Bounds = block.Bounds;
+            temp.SetBounds(temp.Location.X, temp.Location.Y - 1, temp.Width, 1);
+            if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
+            else return false;
         }
     }
 }

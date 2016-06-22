@@ -39,7 +39,6 @@ namespace Tank
                     break;
                 case Type.Steel:
                     this.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\steel.png");
-                    destructible = true;
                     break;
                 case Type.Bush:
                     this.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\bush.png");
@@ -65,7 +64,13 @@ namespace Tank
                     drivable = true;
                     this.Image = null;
                     break;
+                case Type.Phenix:
+                    destructible = true;
+                    this.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix.png");
+                    break;
+                
                 default:
+                    //destructible = true;
                     break;
             }
         }

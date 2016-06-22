@@ -34,7 +34,8 @@
             this.timer_move = new System.Windows.Forms.Timer(this.components);
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.imageList3 = new System.Windows.Forms.ImageList(this.components);
+            this.timer_bullet = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // imageList1
@@ -76,14 +77,18 @@
             this.panel1.Size = new System.Drawing.Size(416, 416);
             this.panel1.TabIndex = 0;
             // 
-            // label1
+            // imageList3
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(485, 160);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(33, 12);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
+            this.imageList3.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList3.ImageStream")));
+            this.imageList3.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList3.Images.SetKeyName(0, "bad1_gray_up_1.png");
+            this.imageList3.Images.SetKeyName(1, "bad1_gray_up_2.png");
+            this.imageList3.Images.SetKeyName(2, "bad1_gray_down_1.png");
+            this.imageList3.Images.SetKeyName(3, "bad1_gray_down_2.png");
+            this.imageList3.Images.SetKeyName(4, "bad1_gray_left_1.png");
+            this.imageList3.Images.SetKeyName(5, "bad1_gray_left_2.png");
+            this.imageList3.Images.SetKeyName(6, "bad1_gray_right_1.png");
+            this.imageList3.Images.SetKeyName(7, "bad1_gray_right_2.png");
             // 
             // Form_game_2player
             // 
@@ -91,8 +96,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(560, 480);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
+            this.KeyPreview = true;
             this.Name = "Form_game_2player";
             this.Text = "Battle City 2016";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form_game_2player_FormClosed);
@@ -100,7 +105,6 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form_game_2player_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form_game_2player_KeyUp);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -110,6 +114,7 @@
         private System.Windows.Forms.Timer timer_move;
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ImageList imageList3;
+        private System.Windows.Forms.Timer timer_bullet;
     }
 }

@@ -31,10 +31,12 @@ namespace Tank
         // temp attributes
         public ImageList temp { get; set; } // 
         public bool temp2 { get; set; } // 
+        //public enum Tank { Enum }Type type { get; set; }
 
         public Tank(ImageList imageList1, int x, int y/*, ImageList[][][] imageList_tank*/)
         {
             // temp set
+            //this.type=;
             this.temp = imageList1;
             this.temp2 = false;
             // pictureBox set
@@ -44,19 +46,19 @@ namespace Tank
             this.Top = y;
             this.Left = x;
             // inner data set
+            this.drivable = false;
+            this.ammo = 1;
             this.animation = new ImageList();
             this.animation.ImageSize = new Size(32, 32);
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\shield1.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\shield2.png"));
-            this.animation.Images.Add(new Bitmap(Environment.CurrentDirectory + @"\..\..\image\spawn1.png"));
+            this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\spawn1.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\spawn2.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\spawn3.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\spawn4.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\pop1.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\pop2.png"));
             this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\pop3.png"));
-            this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\big_pop1.png"));
-            this.animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\big_pop2.png"));
             this.timer = new Timer();
             this.timer.Interval = 50;
             this.timer.Tick += new System.EventHandler(this.timer_tick);
@@ -154,10 +156,10 @@ namespace Tank
                         this.Size = new Size(64, 64);
                         this.Top = this.Top - 16;
                         this.Left = this.Left - 16;
-                        this.Image = animation.Images[9];
+                        this.Image = Image.FromFile((Environment.CurrentDirectory + @"\..\..\image\big_pop1.png"));
                         break;
                     default:
-                        this.Image = animation.Images[10];
+                        this.Image = Image.FromFile((Environment.CurrentDirectory + @"\..\..\image\big_pop2.png"));;
                         timer.Stop();
                         exploding = false;
                         tick = 0;
@@ -200,9 +202,17 @@ namespace Tank
             return true;
         }
 
-        public bool fire()
+        public Bullet Fire()
         {
-            return false;
+            if (ammo > 0)
+            {
+                ammo--;
+                return new Bullet(direction, 2, Left, Top, this);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void upgrade()
