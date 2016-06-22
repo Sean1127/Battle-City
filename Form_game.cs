@@ -88,9 +88,10 @@ namespace Tank
                     player1.direction = Dir.Up;
                     break;
                 case Keys.Space:
-                    bullet[0] = player1.Fire();
-                    if (bullet[0] != null)
+                    Bullet temp = player1.Fire();
+                    if (temp != null)
                     {
+                        bullet[0] = temp;
                         panel1.Controls.Add(bullet[0]);
                         bullet[0].BringToFront();
                         player1.BringToFront();
@@ -219,10 +220,10 @@ namespace Tank
 
         private void timer_bullet_Tick(object sender, EventArgs e)
         {
-            count++;
             for (int i = 0; i < 6; i++)
             {
                 if (bullet[i] == null) return;
+                if (bullet[i].tick == 3) panel1.Controls.Remove(bullet[i]);
                 switch (bullet[i].direction)
                 {
                     case Dir.Up:
@@ -230,22 +231,32 @@ namespace Tank
                         else
                         {
                             bullet[i].Explode();
-                            bullet[i] = null;
                         }
                         break;
                     case Dir.Down:
                         if (!HitDown(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
                         break;
                     case Dir.Right:
                         if (!HitRight(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
                         break;
                     case Dir.Left:
                         if (!HitLeft(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
                         break;
                 }
             }
         }
-        private int count = 0;
 
         private bool HitUp(Bullet b)
         {
@@ -256,11 +267,37 @@ namespace Tank
                 {
                     if (!ob.crossable)
                     {
-                        if (b.Bounds.IntersectsWith(ob.Bounds)) return true;
+                        if (b.Bounds.IntersectsWith(ob.Bounds))
+                        {
+                            if (ob.destructible)
+                            {
+                                if (ob.type == Type.Phenix)
+                                {                                  
+                                    GameOver(ob, b);
+                                }
+                                else
+                                {
+                                    ob.type = Type.Road;
+                                }
+                            }
+                            ob.TypeChanged();
+                            return true;
+                        }
                     }
                 }
             }
             return false;
+        }
+
+        private void GameOver(Object ob, Bullet b)
+        {
+            b.Explode();
+            ob.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix_dead.png");
+            timer_bullet.Stop();
+            MessageBox.Show("Game Over", "You're base has been destroyed", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            form_stage.Close();
+            this.Close();
+
         }
 
         private bool HitDown(Bullet b)
@@ -272,7 +309,22 @@ namespace Tank
                 {
                     if (!ob.crossable)
                     {
-                        if (b.Bounds.IntersectsWith(ob.Bounds)) return true;
+                        if (b.Bounds.IntersectsWith(ob.Bounds))
+                        {
+                            if (ob.destructible)
+                            {
+                                if (ob.type == Type.Phenix)
+                                {
+                                    GameOver(ob, b);
+                                }
+                                else
+                                {
+                                    ob.type = Type.Road;
+                                }
+                            }
+                            ob.TypeChanged();
+                            return true;
+                        }
                     }
                 }
             }
@@ -281,14 +333,29 @@ namespace Tank
 
         private bool HitRight(Bullet b)
         {
-            if (b.Top == 384) return true;
+            if (b.Left == 384) return true;
             foreach (Object ob in map)
             {
                 if (ob != null)
                 {
                     if (!ob.crossable)
                     {
-                        if (b.Bounds.IntersectsWith(ob.Bounds)) return true;
+                        if (b.Bounds.IntersectsWith(ob.Bounds))
+                        {
+                            if (ob.destructible)
+                            {
+                                if (ob.type == Type.Phenix)
+                                {
+                                    GameOver(ob, b);
+                                }
+                                else
+                                {
+                                    ob.type = Type.Road;
+                                }
+                            }
+                            ob.TypeChanged();
+                            return true;
+                        }
                     }
                 }
             }
@@ -297,14 +364,29 @@ namespace Tank
 
         private bool HitLeft(Bullet b)
         {
-            if (b.Left == 0) return true;
+            if (b.Left < 0) return true;
             foreach (Object ob in map)
             {
                 if (ob != null)
                 {
                     if (!ob.crossable)
                     {
-                        if (b.Bounds.IntersectsWith(ob.Bounds)) return true;
+                        if (b.Bounds.IntersectsWith(ob.Bounds))
+                        {
+                            if (ob.destructible)
+                            {
+                                if (ob.type == Type.Phenix)
+                                {
+                                    GameOver(ob,b);
+                                }
+                                else
+                                {
+                                    ob.type = Type.Road;
+                                }
+                            }
+                            ob.TypeChanged();
+                            return true;
+                        }
                     }
                 }
             }

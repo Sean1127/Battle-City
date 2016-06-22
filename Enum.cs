@@ -8,7 +8,7 @@ namespace Tank
 {
     public class Enum
     {
-        public enum Type : int { Road, Brick, Steel, Bush, Ice, Water, Phenix };
+        public enum Type : int { Road, Brick, Steel, Bush, Ice, Water, Phenix, Dead_Phenix};
         public enum Color : int { Yellow, Green, Gray, Red };
         public enum Dir : int { Up, Down, Left, Right };
     }

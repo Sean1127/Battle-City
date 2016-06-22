@@ -39,7 +39,6 @@ namespace Tank
                     break;
                 case Type.Steel:
                     this.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\steel.png");
-                    destructible = true;
                     break;
                 case Type.Bush:
                     this.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\bush.png");
@@ -67,11 +66,7 @@ namespace Tank
                     break;
                 case Type.Phenix:
                     destructible = true;
-                    animation = new ImageList();
-                    animation.ImageSize = new Size(32, 32);
-                    animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix.png"));
-                    animation.Images.Add(Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix_dead.png"));
-                    this.Image = animation.Images[0];
+                    this.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix.png");
                     break;
                 default:
                     break;

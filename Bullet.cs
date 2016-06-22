@@ -16,6 +16,8 @@ namespace Tank
         public int speed { get; set; }
         private Tank sender;
 
+        public Bullet() { }
+
         public Bullet(Dir direction, int speed, int x, int y, Tank sender)
         {
             this.sender = sender;
@@ -43,25 +45,11 @@ namespace Tank
 
         public void Explode()
         {
+            this.speed = 0;
             this.timer = new Timer();
             this.timer.Interval = 200;
             this.timer.Tick += new System.EventHandler(this.timer_tick);
             this.tick = 0;
-            switch (direction)
-            {
-                case Dir.Up:
-                    Top = Top - 12;
-                    break;
-                case Dir.Down:
-                    Top = Top + 12;
-                    break;
-                case Dir.Right:
-                    Left = Left - 12;
-                    break;
-                case Dir.Left:
-                    Left = Left + 12;
-                    break;
-            }
             this.timer.Start();
         }
 

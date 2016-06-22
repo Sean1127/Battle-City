@@ -35,6 +35,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.timer_bullet = new System.Windows.Forms.Timer(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // timer_move
@@ -74,6 +75,15 @@
             this.timer_bullet.Interval = 10;
             this.timer_bullet.Tick += new System.EventHandler(this.timer_bullet_Tick);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(482, 91);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(33, 12);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "label1";
+            // 
             // Form_game
             // 
             this.AllowDrop = true;
@@ -81,6 +91,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(560, 480);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.KeyPreview = true;
             this.Name = "Form_game";
@@ -90,6 +101,7 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form_game_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form_game_KeyUp);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -100,5 +112,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.Timer timer_bullet;
+        private System.Windows.Forms.Label label1;
     }
 }
