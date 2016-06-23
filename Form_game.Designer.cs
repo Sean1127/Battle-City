@@ -67,18 +67,18 @@
             // 
             this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
             this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList2.Images.SetKeyName(0, "bad1_gray_up_1.png");
-            this.imageList2.Images.SetKeyName(1, "bad1_gray_up_2.png");
-            this.imageList2.Images.SetKeyName(2, "bad1_gray_down_1.png");
-            this.imageList2.Images.SetKeyName(3, "bad1_gray_down_2.png");
-            this.imageList2.Images.SetKeyName(4, "bad1_gray_left_1.png");
-            this.imageList2.Images.SetKeyName(5, "bad1_gray_left_2.png");
-            this.imageList2.Images.SetKeyName(6, "bad1_gray_right_1.png");
-            this.imageList2.Images.SetKeyName(7, "bad1_gray_right_2.png");
+            this.imageList2.Images.SetKeyName(0, "bad2_gray_up_1.png");
+            this.imageList2.Images.SetKeyName(1, "bad2_gray_up_2.png");
+            this.imageList2.Images.SetKeyName(2, "bad2_gray_down_1.png");
+            this.imageList2.Images.SetKeyName(3, "bad2_gray_down_2.png");
+            this.imageList2.Images.SetKeyName(4, "bad2_gray_left_1.png");
+            this.imageList2.Images.SetKeyName(5, "bad2_gray_left_2.png");
+            this.imageList2.Images.SetKeyName(6, "bad2_gray_right_1.png");
+            this.imageList2.Images.SetKeyName(7, "bad2_gray_right_2.png");
             // 
             // timer_bullet
             // 
-            this.timer_bullet.Interval = 10;
+            this.timer_bullet.Interval = 5;
             this.timer_bullet.Tick += new System.EventHandler(this.timer_bullet_Tick);
             // 
             // Form_game

@@ -42,7 +42,7 @@
             this.button_singleplayer.Name = "button_singleplayer";
             this.button_singleplayer.Size = new System.Drawing.Size(75, 23);
             this.button_singleplayer.TabIndex = 0;
-            this.button_singleplayer.Text = "1 player";
+            this.button_singleplayer.Text = "地圖試跑";
             this.button_singleplayer.UseVisualStyleBackColor = true;
             this.button_singleplayer.Click += new System.EventHandler(this.button_singleplayer_Click);
             // 

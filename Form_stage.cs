@@ -51,5 +51,13 @@ namespace Tank
             }
             this.Hide();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Object[,] map = Map.ReadMap(Environment.CurrentDirectory + @"\..\..\stage\fight.map");
+            Form_game_2player form_game = new Form_game_2player(this, map);
+            form_game.Show();
+                this.Hide();
+        }
     }
 }

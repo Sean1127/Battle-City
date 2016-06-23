@@ -18,13 +18,11 @@ namespace Tank
     {
         private Form_stage form_stage;
         private Tank player1;
+        private Tank player2;
         private KeyEventArgs repeat;
         private ImageList[][][] imageList_tank;
         private Object[,] map;
         private Bullet[] bullet;
-        private Tank player2;
-       // private Tank player3;
-       // private Tank player4;
 
         public Form_game(Form_stage form_stage, Object[,] map)
         {
@@ -35,7 +33,30 @@ namespace Tank
 
         private void Form_game_Load(object sender, EventArgs e)
         {
-            
+            /*
+            panel1.Controls.Clear();
+            this.player1 = new Tank(imageList1, Const.spawnLocation1X, Const.spawnLocation1Y);
+            panel1.Controls.Add(player1);
+            player1.BringToFront();
+            player1.Spawn();
+
+            for (int i = 0; i < 13; i++)
+            {
+                for (int j = 0; j < 13; j++)
+                {
+                    map[j, i].Size = new Size(32, 32);
+                    map[j, i].Top = j * 32;
+                    map[j, i].Left = i * 32;
+                    panel1.Controls.Add(map[j, i]);
+                    if (map[j, i].type == Type.Bush)
+                    {
+                        map[j, i].BackColor = Color.Transparent;
+                        map[j, i].BringToFront();
+                    }
+                }
+            }
+            bullet = new Bullet[6];
+            timer_bullet.Start();*/
             panel1.Controls.Clear();
             for (int i = 0; i < 13; i++)
             {
@@ -50,16 +71,12 @@ namespace Tank
 
             this.player1 = new Tank(imageList1, Const.spawnLocation1X, Const.spawnLocation1Y);
             this.player2 = new Tank(imageList2, 32, 0);
-
             panel1.Controls.Add(player1);
             panel1.Controls.Add(player2);
-
             player1.BringToFront();
             player2.BringToFront();
-
             player1.Spawn();
             player2.Spawn();
-
             bullet = new Bullet[6];
             timer_bullet.Start();
         }
@@ -224,7 +241,47 @@ namespace Tank
             }
             return false;
         }
-
+        /*
+        private void timer_bullet_Tick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                if (bullet[i] == null) return;
+                if (bullet[i].tick == 3) panel1.Controls.Remove(bullet[i]);
+                switch (bullet[i].direction)
+                {
+                    case Dir.Up:
+                        if (!HitUp(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
+                        break;
+                    case Dir.Down:
+                        if (!HitDown(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
+                        break;
+                    case Dir.Right:
+                        if (!HitRight(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
+                        break;
+                    case Dir.Left:
+                        if (!HitLeft(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
+                        break;
+                }
+            }
+        }
+        */
         private void timer_bullet_Tick(object sender, EventArgs e)
         {
             //label1.Text = "yes";
@@ -258,7 +315,7 @@ namespace Tank
                         else
                         {
                             bullet[i].Explode();
-                            
+
                         }
                         break;
                     case Dir.Right:
@@ -289,6 +346,39 @@ namespace Tank
                         break;
                 }
             }
+        }
+
+        public bool Collision_Top(PictureBox tar, PictureBox block)
+        {
+            PictureBox temp = new PictureBox();
+            temp.Bounds = block.Bounds;
+            temp.SetBounds(temp.Location.X, temp.Location.Y + temp.Height, temp.Width, 1);
+            if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
+            else return false;
+        }
+        public bool Collision_Left(PictureBox tar, PictureBox block)
+        {
+            PictureBox temp = new PictureBox();
+            temp.Bounds = block.Bounds;
+            temp.SetBounds(temp.Location.X + temp.Width, temp.Location.Y, 1, temp.Height);
+            if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
+            else return false;
+        }
+        public bool Collision_Right(PictureBox tar, PictureBox block)
+        {
+            PictureBox temp = new PictureBox();
+            temp.Bounds = block.Bounds;
+            temp.SetBounds(temp.Location.X - 1, temp.Location.Y, 1, temp.Height);
+            if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
+            else return false;
+        }
+        public bool Collision_Down(PictureBox tar, PictureBox block)
+        {
+            PictureBox temp = new PictureBox();
+            temp.Bounds = block.Bounds;
+            temp.SetBounds(temp.Location.X, temp.Location.Y - 1, temp.Width, 1);
+            if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
+            else return false;
         }
 
         private bool HitUp(Bullet b)
@@ -424,38 +514,6 @@ namespace Tank
                 }
             }
             return false;
-        }
-        public bool Collision_Top(PictureBox tar, PictureBox block)
-        {
-            PictureBox temp = new PictureBox();
-            temp.Bounds = block.Bounds;
-            temp.SetBounds(temp.Location.X, temp.Location.Y + temp.Height, temp.Width, 1);
-            if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
-            else return false;
-        }
-        public bool Collision_Left(PictureBox tar, PictureBox block)
-        {
-            PictureBox temp = new PictureBox();
-            temp.Bounds = block.Bounds;
-            temp.SetBounds(temp.Location.X + temp.Width, temp.Location.Y, 1, temp.Height);
-            if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
-            else return false;
-        }
-        public bool Collision_Right(PictureBox tar, PictureBox block)
-        {
-            PictureBox temp = new PictureBox();
-            temp.Bounds = block.Bounds;
-            temp.SetBounds(temp.Location.X - 1, temp.Location.Y, 1, temp.Height);
-            if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
-            else return false;
-        }
-        public bool Collision_Down(PictureBox tar, PictureBox block)
-        {
-            PictureBox temp = new PictureBox();
-            temp.Bounds = block.Bounds;
-            temp.SetBounds(temp.Location.X, temp.Location.Y - 1, temp.Width, 1);
-            if (tar.Bounds.IntersectsWith(temp.Bounds)) return true;
-            else return false;
         }
     }
 }

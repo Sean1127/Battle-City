@@ -68,9 +68,7 @@ namespace Tank
                     destructible = true;
                     this.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix.png");
                     break;
-                
                 default:
-                    //destructible = true;
                     break;
             }
         }

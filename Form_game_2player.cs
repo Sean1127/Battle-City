@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Input;
-using Type = Tank.Enum.Type;
 using Dir = Tank.Enum.Dir;
+using Type = Tank.Enum.Type;
+using System.Timers;
 
 namespace Tank
 {
@@ -18,11 +18,11 @@ namespace Tank
         private Form_stage form_stage;
         private Tank player1;
         private Tank player2;
-        private Tank player3;
         private KeyEventArgs repeat;
         private ImageList[][][] imageList_tank;
         private Object[,] map;
         private Bullet[] bullet;
+        
 
         public Form_game_2player(Form_stage form_stage, Object[,] map)
         {
@@ -47,19 +47,14 @@ namespace Tank
 
             this.player1 = new Tank(imageList1, Const.spawnLocation1X, Const.spawnLocation1Y);
             this.player2 = new Tank(imageList2, Const.spawnLocation2X, Const.spawnLocation2Y);
-            this.player3 = new Tank(imageList3, 32,0);
             panel1.Controls.Add(player1);
             panel1.Controls.Add(player2);
-            panel1.Controls.Add(player3);
             player1.BringToFront();
             player2.BringToFront();
-            player3.BringToFront();
             player1.Spawn();
             player2.Spawn();
-            player3.Spawn();
             bullet = new Bullet[6];
             timer_bullet.Start();
-            //label1.Text = "false";
         }
 
         private void timer_move_Tick(object sender, EventArgs e)
@@ -104,16 +99,6 @@ namespace Tank
                     player1.dirUp = (player1.spawning) ? false : true;
                     player1.direction = Dir.Up;
                     break;
-                case Keys.Space:
-                    Bullet temp = player1.Fire();
-                    if (temp != null)
-                    {
-                        bullet[0] = temp;
-                        panel1.Controls.Add(bullet[0]);
-                        bullet[0].BringToFront();
-                        player1.BringToFront();
-                    }
-                    break;
                 case Keys.W:
                     player2.dirUp = (player2.spawning) ? false : true;
                     player2.direction = Dir.Up;
@@ -129,6 +114,16 @@ namespace Tank
                 case Keys.D:
                     player2.dirRight = (player2.spawning) ? false : true;
                     player2.direction = Dir.Right;
+                    break;
+                case Keys.Space:
+                    Bullet temp = player1.Fire();
+                    if (temp != null)
+                    {
+                        bullet[0] = temp;
+                        panel1.Controls.Add(bullet[0]);
+                        bullet[0].BringToFront();
+                        player1.BringToFront();
+                    }
                     break;
                 case Keys.J:
                     Bullet temp1 = player2.Fire();
@@ -180,7 +175,8 @@ namespace Tank
                     player2.dirRight = false;
                     player2.direction = Dir.Right;
                     break;
-                /*case Keys.Space:
+                    /*
+                case Keys.Space:
                     Bullet bullet1 = player1.Fire();
                     if (bullet1 != null)
                     {
@@ -322,69 +318,8 @@ namespace Tank
         private void timer_bullet_Tick(object sender, EventArgs e)
         {
             //label1.Text = "yes";
-            for (int i = 0; i < 6; i++)
-            {
-                if (bullet[i] == null) return;
-                if (bullet[i].tick == 3) panel1.Controls.Remove(bullet[i]);
-                switch (bullet[i].direction)
-                {
-                    case Dir.Up:
-                        if (!Collision_Top(bullet[i], player3)) bullet[i].Fly();
-                        else
-                        {
-                            bullet[i].Explode();
-                            panel1.Controls.Remove(player3);
-                        }
-                        if (!HitUp(bullet[i])) bullet[i].Fly();
-                        else
-                        {
-                            bullet[i].Explode();
-                        }
-                        break;
-                    case Dir.Down:
-                        if (!Collision_Top(bullet[i], player3)) bullet[i].Fly();
-                        else
-                        {
-                            bullet[i].Explode();
-                            panel1.Controls.Remove(player3);
-                        }
-                        if (!HitDown(bullet[i])) bullet[i].Fly();
-                        else
-                        {
-                            bullet[i].Explode();
-
-                        }
-                        break;
-                    case Dir.Right:
-                        if (!Collision_Top(bullet[i], player3)) bullet[i].Fly();
-                        else
-                        {
-                            bullet[i].Explode();
-                            panel1.Controls.Remove(player3);
-                        }
-                        if (!HitRight(bullet[i])) bullet[i].Fly();
-                        else
-                        {
-                            bullet[i].Explode();
-                        }
-                        break;
-                    case Dir.Left:
-                        if (!Collision_Left(bullet[i], player3)) bullet[i].Fly();
-                        else
-                        {
-                            bullet[i].Explode();
-                            panel1.Controls.Remove(player3);
-                        }
-                        if (!HitLeft(bullet[i])) bullet[i].Fly();
-                        else
-                        {
-                            bullet[i].Explode();
-                        }
-                        break;
-                }
-            }
+           
         }
-
         private bool HitUp(Bullet b)
         {
             if (b.Top == 0) return true;
@@ -400,7 +335,7 @@ namespace Tank
                             {
                                 if (ob.type == Type.Phenix)
                                 {
-                                    GameOver(ob, b);
+                                   // GameOver(ob, b);
                                 }
                                 else
                                 {
@@ -415,18 +350,6 @@ namespace Tank
             }
             return false;
         }
-
-        private void GameOver(Object ob, Bullet b)
-        {
-            b.Explode();
-            ob.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix_dead.png");
-            timer_bullet.Stop();
-            MessageBox.Show("Game Over", "You're base has been destroyed", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            form_stage.Close();
-            this.Close();
-
-        }
-
         private bool HitDown(Bullet b)
         {
             if (b.Top == 384) return true;
@@ -442,7 +365,7 @@ namespace Tank
                             {
                                 if (ob.type == Type.Phenix)
                                 {
-                                    GameOver(ob, b);
+                                    //GameOver(ob, b);
                                 }
                                 else
                                 {
@@ -473,7 +396,7 @@ namespace Tank
                             {
                                 if (ob.type == Type.Phenix)
                                 {
-                                    GameOver(ob, b);
+                                    //GameOver(ob, b);
                                 }
                                 else
                                 {
@@ -504,7 +427,7 @@ namespace Tank
                             {
                                 if (ob.type == Type.Phenix)
                                 {
-                                    GameOver(ob, b);
+                                    //GameOver(ob, b);
                                 }
                                 else
                                 {
@@ -518,6 +441,144 @@ namespace Tank
                 }
             }
             return false;
+        }
+        private void GameOver(/*Object ob, Bullet b*/Tank c, Bullet b)
+        {
+            c.Explode();
+            b.Explode();
+            //ob.Image = Image.FromFile(Environment.CurrentDirectory + @"\..\..\image\terrain\phenix_dead.png");
+            timer_bullet.Stop();
+            MessageBox.Show("Game Over", "You're base has been destroyed", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            form_stage.Close();
+            this.Close();
+
+        }
+
+        private void timer_bullet_Tick_1(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                if (bullet[i] == null) continue;
+                if (bullet[i].tick == 3) panel1.Controls.Remove(bullet[i]);
+                switch (bullet[i].direction)
+                {
+                    case Dir.Up:
+                        if (i == 0)
+                        {
+                            if (!Collision_Top(bullet[i], player2)) bullet[i].Fly();
+                            else
+                            {
+                                bullet[i].Explode();
+                                panel1.Controls.Remove(player2);
+                                GameOver(player2,bullet[i] );
+                            }
+                        }
+                        if (i == 1)
+                        {
+                            if (!Collision_Top(bullet[i], player1)) bullet[i].Fly();
+                            else
+                            {
+                                bullet[i].Explode();
+                                panel1.Controls.Remove(player1);
+                                GameOver(player1, bullet[i]);
+                            }
+                        }
+                        
+
+                       
+                        if (!HitUp(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
+                        break;
+                    case Dir.Down:
+                        if (i == 0)
+                        {
+                            if (!Collision_Top(bullet[i], player2)) bullet[i].Fly();
+                            else
+                            {
+                                bullet[i].Explode();
+                                panel1.Controls.Remove(player2);
+                                GameOver(player2, bullet[i]);
+                            }
+                        }
+                        if (i == 1)
+                        {
+                            if (!Collision_Top(bullet[i], player1)) bullet[i].Fly();
+                            else
+                            {
+                                bullet[i].Explode();
+                                panel1.Controls.Remove(player1);
+                                GameOver(player1,bullet[i]);
+                            }
+                        }
+                       
+                        if (!HitDown(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+
+                        }
+                        break;
+                    case Dir.Right:
+                        if (i == 0)
+                        {
+                            if (!Collision_Top(bullet[i], player2)) bullet[i].Fly();
+                            else
+                            {
+                                bullet[i].Explode();
+                                panel1.Controls.Remove(player2);
+                                GameOver(player2, bullet[i]);
+                            }
+                        }
+                        if (i == 1)
+                        {
+                            if (!Collision_Top(bullet[i], player1)) bullet[i].Fly();
+                            else
+                            {
+                                bullet[i].Explode();
+                                panel1.Controls.Remove(player1);
+                                GameOver(player1, bullet[i]);
+                            }
+                        }
+                        
+                        if (!HitRight(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
+                        break;
+                    case Dir.Left:
+                        if (i == 0)
+                        {
+                            if (!Collision_Left(bullet[i], player2)) bullet[i].Fly();
+                            else
+                            {
+                                bullet[i].Explode();
+                                panel1.Controls.Remove(player2);
+                                GameOver(player2, bullet[i]);
+                            }
+                        }
+                        if (i == 1)
+                        {
+                            if (!Collision_Left(bullet[i], player1)) bullet[i].Fly();
+                            else
+                            {
+                                bullet[i].Explode();
+                                panel1.Controls.Remove(player1);
+                                GameOver(player1, bullet[i]);
+                            }
+                        }
+                        
+                        if (!HitLeft(bullet[i])) bullet[i].Fly();
+                        else
+                        {
+                            bullet[i].Explode();
+                        }
+                        break;
+                }
+            }
         }
     }
 }

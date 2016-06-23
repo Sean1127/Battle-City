@@ -8,7 +8,7 @@ namespace Tank
 {
     public class Enum
     {
-        public enum Type : int { Road, Brick, Steel, Bush, Ice, Water, Phenix,Tankcar };
+        public enum Type : int { Road, Brick, Steel, Bush, Ice, Water, Phenix };
         public enum Color : int { Yellow, Green, Gray, Red };
         public enum Dir : int { Up, Down, Left, Right };
     }
@@ -19,6 +19,5 @@ namespace Tank
         public const int spawnLocation1Y = 384;
         public const int spawnLocation2X = 224;
         public const int spawnLocation2Y = 384;
-        
     }
 }

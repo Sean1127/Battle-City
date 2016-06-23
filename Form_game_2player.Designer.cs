@@ -34,7 +34,6 @@
             this.timer_move = new System.Windows.Forms.Timer(this.components);
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
-            this.imageList3 = new System.Windows.Forms.ImageList(this.components);
             this.timer_bullet = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
@@ -77,18 +76,9 @@
             this.panel1.Size = new System.Drawing.Size(416, 416);
             this.panel1.TabIndex = 0;
             // 
-            // imageList3
+            // timer_bullet
             // 
-            this.imageList3.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList3.ImageStream")));
-            this.imageList3.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList3.Images.SetKeyName(0, "bad1_gray_up_1.png");
-            this.imageList3.Images.SetKeyName(1, "bad1_gray_up_2.png");
-            this.imageList3.Images.SetKeyName(2, "bad1_gray_down_1.png");
-            this.imageList3.Images.SetKeyName(3, "bad1_gray_down_2.png");
-            this.imageList3.Images.SetKeyName(4, "bad1_gray_left_1.png");
-            this.imageList3.Images.SetKeyName(5, "bad1_gray_left_2.png");
-            this.imageList3.Images.SetKeyName(6, "bad1_gray_right_1.png");
-            this.imageList3.Images.SetKeyName(7, "bad1_gray_right_2.png");
+            this.timer_bullet.Tick += new System.EventHandler(this.timer_bullet_Tick_1);
             // 
             // Form_game_2player
             // 
@@ -114,7 +104,6 @@
         private System.Windows.Forms.Timer timer_move;
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ImageList imageList3;
         private System.Windows.Forms.Timer timer_bullet;
     }
 }
